@@ -1,13 +1,13 @@
-public interface PathInterface {
+public interface PathInterface extends Comparable<PathInterface> {
         //private double dist; 
-         //private double time;
-        //private BuildingInterface predecessor;
-        //private BuildingInterface successor;
-        //public Path(double dist, double time, BuildingInterface pred, BuildingInterface succ) {
+        //private String predecessor;
+        //private String successor;
+        //public Path(double dist, String pred, String succ) {
         //}
-public BuildingInterface getPredecessor();
-public BuildingInterface getSuccessor();
+public String getPredecessor();
+public String getSuccessor();
 public double getDistance();
-public double getTime();
+
+
     }
 

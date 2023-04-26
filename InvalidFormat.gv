@@ -1,0 +1,13 @@
+graph CampusMap2{
+
+	Sellery [department=Housing];
+	Witte [department=Housing time=3];
+	Sellery -- Memorial Union [];
+	Test
+	testing [asddsads]
+	120312930
+	Union South -- Witte [dist=3]
+	Union South -- Witte [distance=8]
+
+
+}

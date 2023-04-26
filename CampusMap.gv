@@ -1,0 +1,27 @@
+graph CampusMap {     
+                     
+	Memorial Union -- Sellery [distance=1];
+	Sellery -- Witte [distance=1];
+	Memorial Union -- Witte [distance = 2];
+	Memorial Union -- Lakeshore [distance=10];
+	Lakeshore -- Sellery [distance = 13];
+	Van Vleck -- Memorial Union [distance=5];
+	Lakeshore -- Van Vleck [distance= 5];
+	Van Vleck -- Lakeshore [distance= 5];
+	Sellery [department=Housing];
+	Van Vleck [department=Math];
+	Memorial Union [department=Union];
+	Lakeshore [department=Housing];
+	Witte [department=Housing];
+	Capitol Building -- Memorial Union [distance=20];
+	Capitol Building [department=Government];
+	The Nick -- Sellery [distance=1];
+	The Nick [department=Athletics];
+	Camp Randall [department=Football];
+	Mifflin -- Witte [distance=10];
+	Picnic Point -- Memorial Union [distance=50];
+	Picnic Point -- Capitol Building [distance=100];
+	Picnic Point [department=Nature];
+	Union South -- Memorial Union [distance=10];
+	
+}

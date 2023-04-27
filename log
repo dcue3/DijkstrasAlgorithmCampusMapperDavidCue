@@ -1,0 +1,64 @@
+Script started on 2023-04-27 01:28:05+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="94" LINES="49"]
+[?2004h]0;das38@cs400: ~/Project3_DF_red[01;32mdas38@cs400[00m:[01;34m~/Project3_DF_red[00m$ git status
+[?2004lOn branch FrontendDeveloper
+Your branch is ahead of 'origin/FrontendDeveloper' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mlog[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?2004h]0;das38@cs400: ~/Project3_DF_red[01;32mdas38@cs400[00m:[01;34m~/Project3_DF_red[00m$ git log -1
+[?2004l[?1h=[33mcommit 34f715cd8837942ee35c3cb2d65e6e42c04b43d3[m[33m ([m[1;36mHEAD -> [m[1;32mFrontendDeveloper[m[33m)[m[m
+Author: Asish <das38@wisc.edu>[m
+Date:   Thu Apr 27 01:27:32 2023 +0000[m
+[m
+    All the frontend files are added[m
+[K[?1l>[?2004h]0;das38@cs400: ~/Project3_DF_red[01;32mdas38@cs400[00m:[01;34m~/Project3_DF_red[00m$ make clean
+[?2004lrm *.class
+[?2004h]0;das38@cs400: ~/Project3_DF_red[01;32mdas38@cs400[00m:[01;34m~/Project3_DF_red[00m$ ls
+[?2004lCampusNavigationFD.java         FrontendInterface.java  campusMapperFD.java
+CampusNavigationInterface.java  Makefile                [0m[01;31mjunit5.jar[0m
+FrontendDeveloperTests.java     TextUITester.java       log
+[?2004h]0;das38@cs400: ~/Project3_DF_red[01;32mdas38@cs400[00m:[01;34m~/Project3_DF_red[00m$ make runTests
+[?2004ljavac campusMapperFD.java FrontendInterface.java
+Note: campusMapperFD.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+javac CampusNavigationFD.java CampusNavigationInterface.java
+javac -cp .:junit5.jar FrontendDeveloperTests.java
+Note: FrontendDeveloperTests.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+java -jar junit5.jar -cp . --select-class=FrontendDeveloperTests
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m╷[0m
+[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
+[36m├─[0m [36mJUnit Vintage[0m [32m✔[0m
+[36m│  └─[0m [36mFrontendDeveloperTests[0m [32m✔[0m
+[36m│     ├─[0m [34mtest1[0m [32m✔[0m
+[36m│     ├─[0m [34mtest2[0m [32m✔[0m
+[36m│     ├─[0m [34mtest3[0m [32m✔[0m
+[36m│     ├─[0m [34mtest4[0m [32m✔[0m
+[36m│     └─[0m [34mtest5[0m [32m✔[0m
+[36m└─[0m [36mJUnit Platform Suite[0m [32m✔[0m
+
+Test run finished after 132 ms
+[         4 containers found      ]
+[         0 containers skipped    ]
+[         4 containers started    ]
+[         0 containers aborted    ]
+[         4 containers successful ]
+[         0 containers failed     ]
+[         5 tests found           ]
+[         0 tests skipped         ]
+[         5 tests started         ]
+[         0 tests aborted         ]
+[         5 tests successful      ]
+[         0 tests failed          ]
+
+[?2004h]0;das38@cs400: ~/Project3_DF_red[01;32mdas38@cs400[00m:[01;34m~/Project3_DF_red[00m$ exit
+[?2004lexit
+
+Script done on 2023-04-27 01:28:56+00:00 [COMMAND_EXIT_CODE="0"]

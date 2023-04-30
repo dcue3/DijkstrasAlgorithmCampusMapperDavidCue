@@ -1,0 +1,63 @@
+Script started on 2023-04-27 01:36:38+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="114" LINES="41"]
+[?2004h]0;sdabbara@sudheesh-bash: ~/Project3_DF_red[01;32msdabbara@sudheesh-bash[00m:[01;34m~/Project3_DF_red[00m$ git status
+[?2004lOn branch AlgorithmEngineer
+Your branch is ahead of 'origin/AlgorithmEngineer' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mlog[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+[?2004h]0;sdabbara@sudheesh-bash: ~/Project3_DF_red[01;32msdabbara@sudheesh-bash[00m:[01;34m~/Project3_DF_red[00m$ git log -1
+[?2004l[?1h=[33mcommit 607f70b29aee4a74c8582f9b59b17c6ae4fbe546[m[33m ([m[1;36mHEAD -> [m[1;32mAlgorithmEngineer[m[33m)[m[m
+Author: Sudheesh Dabbara <sdabbara@wisc.edu>[m
+Date:   Thu Apr 27 01:33:08 2023 +0000[m
+[m
+    Role Code without log file[m
+[K[?1l>[?2004h]0;sdabbara@sudheesh-bash: ~/Project3_DF_red[01;32msdabbara@sudheesh-bash[00m:[01;34m~/Project3_DF_red[00m$ make clean
+[?2004lrm *.class
+rm: cannot remove '*.class': No such file or directory
+make: *** [Makefile:14: clean] Error 1
+[?2004h]0;sdabbara@sudheesh-bash: ~/Project3_DF_red[01;32msdabbara@sudheesh-bash[00m:[01;34m~/Project3_DF_red[00m$ ls
+[?2004lAlgorithmEngineerTests.java  BuildingAE.java         GraphADT.java  ShortPathGraphAE.java         [0m[01;31mjunit5.jar[0m
+BaseGraph.java               BuildingInterface.java  Makefile       ShortPathGraphInterface.java  log
+[?2004h]0;sdabbara@sudheesh-bash: ~/Project3_DF_red[01;32msdabbara@sudheesh-bash[00m:[01;34m~/Project3_DF_red[00m$ make runTests [K
+[?2004ljavac ShortPathGraphAE.java ShortPathGraphInterface.java
+Note: ./BaseGraph.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+javac BuildingAE.java BuildingInterface.java
+javac -cp .:junit5.jar AlgorithmEngineerTests.java
+java -jar junit5.jar -cp . --select-class=AlgorithmEngineerTests
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+[36m╷[0m
+[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
+[36m│  └─[0m [36mAlgorithmEngineerTests[0m [32m✔[0m
+[36m│     ├─[0m [34mRequiredNodeDataStraightPathtest1()[0m [32m✔[0m
+[36m│     ├─[0m [34mExpectedExceptionsTest3()[0m [32m✔[0m
+[36m│     ├─[0m [34mgetNodeTest5()[0m [32m✔[0m
+[36m│     ├─[0m [34mRequiredNodeRevistEndTest4()[0m [32m✔[0m
+[36m│     └─[0m [34mRequiredNodeCostStraightPathTest2()[0m [32m✔[0m
+[36m├─[0m [36mJUnit Vintage[0m [32m✔[0m
+[36m└─[0m [36mJUnit Platform Suite[0m [32m✔[0m
+
+Test run finished after 180 ms
+[         4 containers found      ]
+[         0 containers skipped    ]
+[         4 containers started    ]
+[         0 containers aborted    ]
+[         4 containers successful ]
+[         0 containers failed     ]
+[         5 tests found           ]
+[         0 tests skipped         ]
+[         5 tests started         ]
+[         0 tests aborted         ]
+[         5 tests successful      ]
+[         0 tests failed          ]
+
+[?2004h]0;sdabbara@sudheesh-bash: ~/Project3_DF_red[01;32msdabbara@sudheesh-bash[00m:[01;34m~/Project3_DF_red[00m$ exit
+[?2004lexit
+
+Script done on 2023-04-27 01:37:37+00:00 [COMMAND_EXIT_CODE="0"]

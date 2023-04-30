@@ -1,4 +1,3 @@
-
 public interface BuildingInterface extends Comparable<BuildingInterface> {
   // public BuildingInterface(String name,String department);
   // public String name;

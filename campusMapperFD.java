@@ -235,13 +235,9 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 	@Override
 	public List<NodeType> getShortestPath(String building1, String building2) {
 		// TODO Auto-generated method stub
-		try{
 		LinkedList<NodeType> shortestPath = new LinkedList<>();
 		shortestPath = (LinkedList<NodeType>) campus.getShortestPath(building1, building2);
 		return shortestPath;
-		}catch(Exception e){
-			System.out.println("It failed");
-		}
 	}
 	
 	/**

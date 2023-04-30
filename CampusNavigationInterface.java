@@ -5,7 +5,7 @@ public interface CampusNavigationInterface<Nodetype, EdgeType> {
   public void loadMap(String filename) throws FileNotFoundException;
  // Add a new building to the campus map
 
-  public void addBuilding(String  name, String department, String schedule, double x, double y);
+  public void addBuilding(String  name, String department);
 
   public void removeBuilding(String name);
 
@@ -17,7 +17,6 @@ public interface CampusNavigationInterface<Nodetype, EdgeType> {
 // Find the shortest path between two buildings, visiting a specified building along the way
     public List<NodeType> getShortestPathWithRequiredNodeData(String building1, String building2, String requiredNode);
     public double getShortestPathWithRequiredNodeCost(String building1, String building2, String requiredNode); // 
-  public String printAllBuildings(); // 
   public String getData(); //
   public void clear(); //
 

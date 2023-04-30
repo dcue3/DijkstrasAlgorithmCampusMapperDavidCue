@@ -1,28 +1,28 @@
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class CampusNavigation implements CampusNavigationInterface<BuildingInterface, Double> {
+public class CampusNavigationBD implements CampusNavigationInterface<BuildingInterface, Double> {
 
     private ShortPathGraphInterface<BuildingInterface, Double> graph;
     private MapReaderInterface mapReader;
     private int totalBuildings;
     private int totalPaths;
 
-    public CampusNavigation(ShortPathGraphInterface<BuildingInterface, Double> graph, MapReaderInterface mapReader) {
+    public CampusNavigationBD(ShortPathGraphInterface<BuildingInterface, Double> graph, MapReaderInterface mapReader) {
         this.graph = graph;
         this.mapReader = mapReader;
     }
 
     public void loadMap(String filename) throws FileNotFoundException {
         // Using mapReader to get a list of nodes and edges
-        List<BuildingInterface> nodesToAdd = new ArrayList<>();
+        List<Building> nodesToAdd = new ArrayList<>();
         List<PathInterface> edgesToAdd = new ArrayList<>();
-        nodesToAdd = (List<BuildingInterface>) mapReader.readBuildingsFromFile(filename);
+        nodesToAdd = mapReader.readBuildingsFromFile(filename);
         edgesToAdd = (List<PathInterface>) mapReader.readPathsFromFile(filename);
 
         // Adding each node to the graph using the addNode() method of ShortPathGraph
         for (int i = 0; i < nodesToAdd.size(); i++) {
-            graph.insertNode((BuildingAE)nodesToAdd.get(i));
+            graph.insertNode((Building)nodesToAdd.get(i));
             this.totalBuildings++;
         }
 
@@ -30,29 +30,32 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
         for (int i = 0; i < edgesToAdd.size(); i++) {
         	Path x = (Path) edgesToAdd.get(i);
         	double dist = x.getDistance();
-        	BuildingInterface pred = new BuildingAE(x.getPredecessor());
-        	BuildingInterface succ = new BuildingAE(x.getSuccessor());
-            graph.insertEdge(pred, succ, dist);
-            this.totalPaths++;
+        	BuildingInterface pred = new Building(x.getPredecessor());
+        	BuildingInterface succ = new Building(x.getSuccessor());
+        	BuildingInterface pred1 = graph.getNode(pred);
+        	BuildingInterface succ1 = graph.getNode(succ);
+            graph.insertEdge(pred1, succ1, dist);
+            graph.insertEdge(succ1, pred1, dist);
+	    this.totalPaths++;
         }
     }
 
     public void addBuilding(String name, String department) {
-        BuildingInterface building = new BuildingAE(name, department);
+        BuildingInterface building = new Building(name, department);
         graph.insertNode(building);
         this.totalBuildings++;
     }
 
     public void removeBuilding(String name) {
-    	BuildingInterface toRemove = new BuildingAE(name);
+    	BuildingInterface toRemove = new Building(name);
         toRemove = graph.getNode(toRemove);
         graph.removeNode(toRemove);
         this.totalBuildings--;
     }
 
     public void addPath(String start, String end, double weight) {
-    	BuildingInterface startB = new BuildingAE(start);
-    	BuildingInterface endB = new BuildingAE(end);
+    	BuildingInterface startB = new Building(start);
+    	BuildingInterface endB = new Building(end);
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
         graph.insertEdge(startB, endB, weight);
@@ -60,8 +63,8 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
     }
 
     public void removePath(String start, String end) {
-    	BuildingInterface startB = new BuildingAE(start);
-    	BuildingInterface endB = new BuildingAE(end);
+    	BuildingInterface startB = new Building(start);
+    	BuildingInterface endB = new Building(end);
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
     	graph.removeEdge(startB, endB);
@@ -70,8 +73,8 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
 
 	@Override
 	public List<BuildingInterface> getShortestPath(String building1, String building2) {
-		BuildingInterface startB = new BuildingAE(building1);
-		BuildingInterface endB = new BuildingAE(building2);
+		BuildingInterface startB = new Building(building1);
+		BuildingInterface endB = new Building(building2);
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
     	List<BuildingInterface> toReturn = graph.shortestPathData(startB, endB); 	
@@ -80,8 +83,8 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
 
 	@Override
 	public double getShortestPathCost(String building1, String building2) {
-		BuildingInterface startB = new BuildingAE(building1);
-		BuildingInterface endB = new BuildingAE(building2);
+		BuildingInterface startB = new Building(building1);
+		BuildingInterface endB = new Building(building2);
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
     	double toReturn = graph.shortestPathCost(startB, endB); 	
@@ -91,9 +94,9 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
 	@Override
 	public List<BuildingInterface> getShortestPathWithRequiredNodeData(String building1, String building2,
 			String requiredNode) {
-		BuildingInterface startB = new BuildingAE(building1);
-		BuildingInterface endB = new BuildingAE(building2);
-		BuildingInterface midB = new BuildingAE(requiredNode);
+		BuildingInterface startB = new Building(building1);
+		BuildingInterface endB = new Building(building2);
+		BuildingInterface midB = new Building(requiredNode);
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
     	midB = graph.getNode(midB);
@@ -103,9 +106,9 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
 
 	@Override
 	public double getShortestPathWithRequiredNodeCost(String building1, String building2, String requiredNode) {
-		BuildingInterface startB = new BuildingAE(building1);
-		BuildingInterface endB = new BuildingAE(building2);
-		BuildingInterface midB = new BuildingAE(requiredNode);
+		BuildingInterface startB = new Building(building1);
+		BuildingInterface endB = new Building(building2);
+		BuildingInterface midB = new Building(requiredNode);
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
     	midB = graph.getNode(midB);
@@ -117,12 +120,14 @@ public class CampusNavigation implements CampusNavigationInterface<BuildingInter
 	public String getData() {
 		String dataString = "Total Buildings in this campus map: " + this.totalBuildings + "\n"
 				+ "Total Paths in this campus map: " + this.totalPaths; 
-		return null;
+		return dataString;
 	}
 
 	@Override
 	public void clear() {
 		this.graph = graph.clear();
+		this.totalBuildings = 0;
+		this.totalPaths = 0;
 		
 	}
 	

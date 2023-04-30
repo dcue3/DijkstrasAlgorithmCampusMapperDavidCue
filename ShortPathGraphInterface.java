@@ -7,5 +7,6 @@ public interface ShortPathGraphInterface<NodeType, EdgeType extends Number> exte
 	public NodeType getNode(NodeType x);
 	public double shortestPathCost(NodeType start, NodeType end);
 	public List<NodeType> shortestPathData(NodeType start, NodeType end);
+	public ShortPathGraphInterface<NodeType, EdgeType> clear();
 }
 

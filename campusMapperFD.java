@@ -28,8 +28,10 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 		int choice = -1;
 		
 		while(choice!=0) {
+			userInput= new Scanner(System.in);
 			System.out.println(menu());
 			String input = userInput.nextLine().trim();
+			choice = -1;
 			int command = input.charAt(0) - '0';
 			
 			if(command < 0 || command > 9) {
@@ -41,7 +43,7 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 			}
 			else if(command == 2) {
 				System.out.println("Enter the name of the file: ");
-				String name = input;
+				String name = userInput.nextLine().trim();
 				loadDataFD(name);
 			}
 			else if(command == 3) {
@@ -102,8 +104,13 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 				b = userInput.nextLine();
 				System.out.println("Enter the name of the building 2:");
 				d = userInput.nextLine();
-				
-				System.out.println("Path:- "+ getShortestPath(b,d)+ " Cost of this Path: " + getShortestPathCost(b,d));
+				String buildingPath = "";
+				List<Building> path = (List<Building>) getShortestPath(b,d);
+				for (int i = 0; i < path.size(); i++) {
+					buildingPath += path.get(i).getName() + " --> ";
+				}
+				buildingPath = buildingPath.substring(0, buildingPath.length()-4);
+				System.out.println("Path:- "+ buildingPath + " Cost of this Path: " + getShortestPathCost(b,d));
 			}
 			else if(command == 8) {
 				String b;
@@ -117,7 +124,14 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 				System.out.println("Enter the name of the building 3(Required):");
 				f = userInput.nextLine();
 				
-				System.out.println("Path:- "+ getShortestPathRequired(b,d,f)+ " Cost of this Path: " + getShortestPathRequiredCost(b,d,f));
+				String buildingPath = "";
+				List<Building> path = (List<Building>) getShortestPathRequired(b,d,f);
+				for (int i = 0; i < path.size(); i++) {
+					buildingPath += path.get(i).getName() + " --> ";
+				}
+				buildingPath = buildingPath.substring(0, buildingPath.length()-4);
+				
+				System.out.println("Path:- "+ buildingPath+ " Cost of this Path: " + getShortestPathRequiredCost(b,d,f));
 
 			}
 			//exiting the loop

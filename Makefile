@@ -1,4 +1,4 @@
-runTests: AlgorithmEngineerTests.class
+runAlgorithmEngineerTests: AlgorithmEngineerTests.class
 	java -jar junit5.jar -cp . --select-class=AlgorithmEngineerTests
 
 AlgorithmEngineerTests.class: AlgorithmEngineerTests.java ShortPathGraphAE.class BuildingAE.class

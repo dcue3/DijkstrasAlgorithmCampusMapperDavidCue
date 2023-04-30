@@ -1,74 +1,0 @@
-Script started on 2023-04-26 01:31:24+00:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="62" LINES="24"]
-[?2004h]0;dcue@cs400: ~/Project3_DF_red[01;32mdcue@cs400[00m:[01;34m~/Project3_DF_red[00m$ git status
-[?2004lOn branch DataWrangler
-Your branch is ahead of 'origin/DataWrangler' by 1 commit.
-  (use "git push" to publish your local commits)
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	[31mlog[m
-
-nothing added to commit but untracked files present (use "git add" to track)
-[?2004h]0;dcue@cs400: ~/Project3_DF_red[01;32mdcue@cs400[00m:[01;34m~/Project3_DF_red[00m$ log [K[K[K[Kgit log -1
-[?2004l[?1h=[33mcommit e0eef4142d1f9bdb3e3765d115d20b1e2410cec3[m[33m ([m[1;36mHEAD -> [m[1;32mDataW[m [33m[m[33m[m[1;36m[m[1;32mrangler[m[33m)[m[m
-Author: David Cue <dcue@wisc.edu>[m
-Date:   Wed Apr 26 01:30:53 2023 +0000[m
-[m
-    Added files[m
-[K[?1l>[?2004h]0;dcue@cs400: ~/Project3_DF_red[01;32mdcue@cs400[00m:[01;34m~/Project3_DF_red[00m$ make clean
-[?2004lrm *.class
-rm: cannot remove '*.class': No such file or directory
-make: *** [Makefile:18: clean] Error 1
-[?2004h]0;dcue@cs400: ~/Project3_DF_red[01;32mdcue@cs400[00m:[01;34m~/Project3_DF_red[00m$ ls
-[?2004lBuilding.java           MapReader.java
-BuildingInterface.java  MapReaderInterface.java
-CampusMap.gv            Path.java
-DataWranglerTests.java  PathInterface.java
-InvalidFormat.gv        [0m[01;31mjunit5.jar[0m
-Makefile                log
-[?2004h]0;dcue@cs400: ~/Project3_DF_red[01;32mdcue@cs400[00m:[01;34m~/Project3_DF_red[00m$ na[K[Kmake runTests
-[?2004ljavac Building.java
-javac BuildingInterface.java
-javac Path.java
-javac PathInterface.java
-javac MapReader.java
-javac MapReaderInterface.java
-javac -cp .:junit5.jar DataWranglerTests.java
-java -jar junit5.jar -cp . --select-class=DataWranglerTests
-Warning: found a line without matching parameters Witte !department!Housing time!3
-Warning: found a line without matching parameters Test
-Warning: found a line without matching parameters testing !asddsads
-Warning: found a line without matching parameters 120312930
-Warning: found a line without matching parameters Union South ! Witte !dist!3
-
-Thanks for using JUnit! Support its development at https://junit.org/sponsoring
-
-[36m╷[0m
-[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
-[36m│  └─[0m [36mDataWranglerTests[0m [32m✔[0m
-[36m│     ├─[0m [34mtestInvalidFile()[0m [32m✔[0m
-[36m│     ├─[0m [34mtestDepartment()[0m [32m✔[0m
-[36m│     ├─[0m [34mtestInvalidFormat()[0m [32m✔[0m
-[36m│     ├─[0m [34mtestLoadBuildings()[0m [32m✔[0m
-[36m│     └─[0m [34mtestLoadPaths()[0m [32m✔[0m
-[36m├─[0m [36mJUnit Vintage[0m [32m✔[0m
-[36m└─[0m [36mJUnit Platform Suite[0m [32m✔[0m
-
-Test run finished after 202 ms
-[         4 containers found      ]
-[         0 containers skipped    ]
-[         4 containers started    ]
-[         0 containers aborted    ]
-[         4 containers successful ]
-[         0 containers failed     ]
-[         5 tests found           ]
-[         0 tests skipped         ]
-[         5 tests started         ]
-[         0 tests aborted         ]
-[         5 tests successful      ]
-[         0 tests failed          ]
-
-[?2004h]0;dcue@cs400: ~/Project3_DF_red[01;32mdcue@cs400[00m:[01;34m~/Project3_DF_red[00m$ exit
-[?2004lexit
-
-Script done on 2023-04-26 01:31:55+00:00 [COMMAND_EXIT_CODE="0"]

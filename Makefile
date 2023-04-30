@@ -1,6 +1,6 @@
 run:
 
-runTests: runDataWranglerTests
+runTests: runDataWranglerTests runFrontendDeveloperTests
 
 runDataWranglerTests: DataWranglerTests.class
 	java -jar junit5.jar -cp . --select-class=DataWranglerTests
@@ -15,6 +15,17 @@ CreateAll: Building.java Path.java BuildingInterface.java MapReader.java PathInt
 	javac PathInterface.java
 	javac MapReader.java
 	javac MapReaderInterface.java
+runFrontendDeveloperTests: FrontendDeveloperTests.class
+	java -jar junit5.jar -cp . --select-class=FrontendDeveloperTests
 
+FrontendDeveloperTests.class: FrontendDeveloperTests.java campusMapperFD.class CampusNavigationFD.class
+	javac -cp .:junit5.jar FrontendDeveloperTests.java
+
+campusMapperFD.class: campusMapperFD.java FrontendInterface.java
+	javac campusMapperFD.java FrontendInterface.java
+	
+CampusNavigationFD.class: CampusNavigationFD.java CampusNavigationInterface.java
+	javac CampusNavigationFD.java CampusNavigationInterface.java
+	
 clean:
 	rm *.class

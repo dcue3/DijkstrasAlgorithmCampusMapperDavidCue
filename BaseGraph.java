@@ -107,7 +107,7 @@ public class BaseGraph <NodeType, EdgeType extends Number> {
         Node succNode = nodes.get(succ);
         if(predNode == null || succNode == null) return false;
         try {
-            // when an edge already exists within the graph, update its weight
+            // when an edge alread exists within the graph, update its weight
             Edge existingEdge = getEdgeHelper(pred,succ);
             existingEdge.data = weight;
         } catch(NoSuchElementException e) {

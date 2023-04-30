@@ -1,5 +1,3 @@
-
-
 public class Building implements BuildingInterface {
 
   public String name;
@@ -41,5 +39,4 @@ public class Building implements BuildingInterface {
     }
     return false; 
     }
-  
 }

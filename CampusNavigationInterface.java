@@ -19,4 +19,3 @@ public interface CampusNavigationInterface<NodeType, EdgeType>  {
 	  public String getData(); 
 	  public void clear();
 }
-

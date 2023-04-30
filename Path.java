@@ -1,4 +1,3 @@
-
 public class Path implements PathInterface {
   private double dist;
   private String predecessor;
@@ -37,7 +36,5 @@ public class Path implements PathInterface {
     }
     return -1;
   }
-
-
 
 }

@@ -33,4 +33,13 @@ public class Building implements BuildingInterface {
   public int compareTo(BuildingInterface building) {
     return name.compareTo(building.getName());
   }
+  
+  @Override
+  public boolean equals(Object building) {
+    if (name.compareTo(((Building) building).getName()) == 0) {
+        return true;
+    }
+    return false; 
+    }
+  
 }

@@ -1,3 +1,7 @@
+run:
+
+runTests: runDataWranglerTests
+
 runDataWranglerTests: DataWranglerTests.class
 	java -jar junit5.jar -cp . --select-class=DataWranglerTests
 

@@ -30,7 +30,10 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 		while(choice!=0) {
 			System.out.println(menu());
 			String input = userInput.nextLine().trim();
-			int command = input.charAt(0) - '0';
+			if (input.length()==0) {
+			    input = userInput.nextLine().trim();
+			}
+			int command = Integer.parseInt(input);
 			
 			if(command < 0 || command > 9) {
 				System.out.println("Please enter a valid choice");
@@ -41,7 +44,7 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 			}
 			else if(command == 2) {
 				System.out.println("Enter the name of the file: ");
-				String name = input;
+				String name = userInput.nextLine().trim();
 				loadDataFD(name);
 			}
 			else if(command == 3) {
@@ -95,6 +98,7 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 				}
 			}
 			else if(command == 7) {
+				try{
 				String b;
 				String d;
 			
@@ -102,10 +106,19 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 				b = userInput.nextLine();
 				System.out.println("Enter the name of the building 2:");
 				d = userInput.nextLine();
-				
-				System.out.println("Path:- "+ getShortestPath(b,d)+ " Cost of this Path: " + getShortestPathCost(b,d));
+				String buildingPath = "";
+				List<BuildingInterface> path = (List<BuildingInterface>) getShortestPath(b,d);
+				for (int i = 0; i < path.size(); i++) {
+					buildingPath += path.get(i).getName() + " --> ";
+				}
+				buildingPath = buildingPath.substring(0, buildingPath.length()-4);
+				System.out.println("Path:- "+ buildingPath + " Cost of this Path: " + getShortestPathCost(b,d));
+				}catch(Exception e){
+					System.out.println("Shortes path could not be found");
+				}	
 			}
 			else if(command == 8) {
+				try{
 				String b;
 				String d;
 				String f;
@@ -117,15 +130,32 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 				System.out.println("Enter the name of the building 3(Required):");
 				f = userInput.nextLine();
 				
-				System.out.println("Path:- "+ getShortestPathRequired(b,d,f)+ " Cost of this Path: " + getShortestPathRequiredCost(b,d,f));
+				String buildingPath = "";
+				List<BuildingInterface> path = (List<BuildingInterface>) getShortestPathRequired(b,d,f);
+				for (int i = 0; i < path.size(); i++) {
+					buildingPath += path.get(i).getName() + " --> ";
+				}
+				buildingPath = buildingPath.substring(0, buildingPath.length()-4);
+				
+				System.out.println("Path:- "+ buildingPath+ " Cost of this Path: " + getShortestPathRequiredCost(b,d,f));
+				}catch(Exception e){
+					System.out.println("Shortest Path could not be found");
+				}
+			}
 
+			else if(command == 9){
+				try{
+					clear();
+					System.out.println("Map has been cleared successfully");
+				}catch(Exception e){
+					System.out.println("Map could not be cleared");
+					}
 			}
 			//exiting the loop
 			else if(command == 0) {
 				choice = 0;
 			}
 		}
-		System.out.println("some");
 	}
 
 	@Override

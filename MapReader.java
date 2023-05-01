@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class MapReader {
+public class MapReader implements MapReaderInterface{
 
 
 

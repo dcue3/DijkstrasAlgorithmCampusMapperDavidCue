@@ -249,4 +249,8 @@ implements ShortPathGraphInterface<NodeType, EdgeType> {
 		throw new NoSuchElementException("Node does not exist");
 	}
 
+	public ShortPathGraphAE<NodeType, EdgeType> clear() {
+		return new ShortPathGraphAE<NodeType, EdgeType>();
+	}
+
 }

@@ -9,6 +9,7 @@ public class CampusMapperApp {
 		CampusNavigationBD BD = new CampusNavigationBD(graph, mapReader);
 		Scanner scan = new Scanner(System.in);
 		campusMapperFD<Building, Double> Frontend = new campusMapperFD<Building, Double>(scan, BD);
+		System.out.println();
 		Frontend.runCommandLoop();
 	}
 }

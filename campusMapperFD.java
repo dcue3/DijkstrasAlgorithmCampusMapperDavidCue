@@ -79,7 +79,8 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 			}
 			
 			else if(command == 5) {
-				String name = input;
+				System.out.println("Please enter the name of building to remove:");
+				String name = userInput.nextLine();
 				removeBuildingFD(name);
 			}
 			
@@ -114,7 +115,7 @@ public class campusMapperFD<NodeType,EdgeType> implements FrontendInterface{
 				buildingPath = buildingPath.substring(0, buildingPath.length()-4);
 				System.out.println("Path:- "+ buildingPath + " Cost of this Path: " + getShortestPathCost(b,d));
 				}catch(Exception e){
-					System.out.println("Shortes path could not be found");
+					System.out.println("Shortest path could not be found");
 				}	
 			}
 			else if(command == 8) {

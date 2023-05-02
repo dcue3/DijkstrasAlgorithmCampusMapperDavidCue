@@ -1,6 +1,10 @@
-run:
+run: compileAll
+	java CampusMapperApp 
 
 runTests: runDataWranglerTests runFrontendDeveloperTests runAlgorithmEngineerTests
+
+compileAll: CampusMapperApp.java campusMapperFD.java CampusNavigationBD.java ShortPathGraphAE.java Building.java Path.java MapReader.java
+	javac CampusMapperApp.java campusMapperFD.java CampusNavigationBD.java ShortPathGraphAE.java Building.java Path.java MapReader.java
 
 runAlgorithmEngineerTests: AlgorithmEngineerTests.class
 	java -jar junit5.jar -cp . --select-class=AlgorithmEngineerTests
@@ -39,5 +43,10 @@ campusMapperFD.class: campusMapperFD.java FrontendInterface.java
 CampusNavigationFD.class: CampusNavigationFD.java CampusNavigationInterface.java
 	javac CampusNavigationFD.java CampusNavigationInterface.java
 	
+
+CampusNavigationBD.class: CampusNavigationBD.java CampusNavigationInterface.java
+	javac CampusNavigationBD.java CampusNavigationInterface.java
+
+
 clean:
 	rm *.class

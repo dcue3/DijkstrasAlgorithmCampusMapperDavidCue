@@ -59,6 +59,7 @@ public class CampusNavigationBD implements CampusNavigationInterface<BuildingInt
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
         graph.insertEdge(startB, endB, weight);
+	graph.insertEdge(endB, startB, weight);
         this.totalPaths++;
     }
 

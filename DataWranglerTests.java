@@ -165,6 +165,125 @@ public class DataWranglerTests {
 
   }
 
+  @Test
+  public void integrationBD() {
+    try {
+    ShortPathGraphAE<BuildingInterface, Double> graph = new ShortPathGraphAE<BuildingInterface, Double>();
+    MapReader mapReader = new MapReader(); //creating backend and necessary components
+    CampusNavigationBD BD = new CampusNavigationBD(graph, mapReader);
+
+    try {
+    BD.loadMap("CampusMap.gv"); //loading map through backend
+    }catch(Exception e) {
+      Assertions.fail();
+    }
+    String result = BD.getData();  //getting data from buildings/paths successfully loaded
+    String expected =  "Total Buildings in this campus map: " + 11 + "\n" +  "Total Paths in this campus map: " + 13;
+    if(!result.equals(expected)) {  //check for expected result
+      Assertions.fail(); //fail if not equal
+    }
+
+    }catch(Exception e) {Assertions.fail();} //fail if any exceptions
+  }
+
+  @Test
+  public void integrationAE() { //testing integration of DW/AE, also tests backend briefly 
+    try {
+    ShortPathGraphAE<BuildingInterface, Double> graph = new ShortPathGraphAE<BuildingInterface, Double>();
+    MapReader mapReader = new MapReader(); //creating backend/AE class and necessary components
+    CampusNavigationBD BD = new CampusNavigationBD(graph, mapReader);
+
+    try {
+    BD.loadMap("CampusMap.gv"); //loading map through backend
+    }catch(Exception e) {
+      Assertions.fail();
+    }
+
+    Double result = BD.getShortestPathWithRequiredNodeCost("Picnic Point", "Witte","Sellery"); //getting AE's shortest path cost through backend
+    Double expected = 52.0; //AE's code should return length of 52.0
+    if(!result.equals(expected)) {  //check for expected result
+      System.out.println(result);
+      Assertions.fail(); //fail if not equal
+    }
+
+    }catch(Exception e) {Assertions.fail();} //fail if any exceptions
+  }
+
+  @Test
+  public void codeReviewOfAlgorithmEngineer1() { //this method tests adding/removing paths/buildings in AE's code.
+    try {
+    ShortPathGraphAE<BuildingInterface, Double> graph = new ShortPathGraphAE<BuildingInterface, Double>(); //create graph
+    BuildingInterface building = new Building("Sellery", "Housing");
+    graph.insertNode(building); //add two buildings
+    BuildingInterface building2 = new Building("Witte", "Housing");
+    graph.insertNode(building2);
+
+    BuildingInterface startB = new Building("Sellery");
+    BuildingInterface endB = new Building("Witte");
+    startB = graph.getNode(startB);
+    endB = graph.getNode(endB); //add path between two buildings
+    graph.insertEdge(startB, endB, 5.0);
+
+    if(graph.getNodeCount()!=2) { //should be two buildings
+      Assertions.fail();
+    }
+    if(graph.getEdgeCount()!=1) { //should be one edge
+      Assertions.fail();
+    }
+
+    }catch(Exception e) {Assertions.fail();} //fail if any exceptions
+
+  }
+
+  @Test
+  public void codeReviewOfAlgorithmEngineer2() { //this method tests getting shortest path in AE's code.
+    try {
+    ShortPathGraphAE<BuildingInterface, Double> graph = new ShortPathGraphAE<BuildingInterface, Double>(); //create graph
+    BuildingInterface building = new Building("Sellery", "Housing");
+    graph.insertNode(building); //add all buildings
+    BuildingInterface building2 = new Building("Witte", "Housing");
+    graph.insertNode(building2);
+    BuildingInterface building3 = new Building("Memorial Union", "Union");
+    graph.insertNode(building3);
+    BuildingInterface building4 = new Building("Capitol", "Government");
+    graph.insertNode(building4);
+
+
+    BuildingInterface startB = new Building("Sellery");
+    BuildingInterface endB = new Building("Witte");
+    startB = graph.getNode(startB);
+    endB = graph.getNode(endB); //add paths between buildings
+    graph.insertEdge(startB, endB, 5.0);
+
+    BuildingInterface memu = graph.getNode(building3);
+    BuildingInterface cap = graph.getNode(building4);
+
+    graph.insertEdge(startB, memu, 2.0);
+    graph.insertEdge(memu, endB, 2.0);
+    graph.insertEdge(cap, memu, 10.0);
+    graph.insertEdge(endB, cap, 4.0);
+
+    List<BuildingInterface> result = graph.shortestPathData(startB, cap); //getting path from AE
+    List<BuildingInterface> target = new LinkedList<>();
+    target.add(startB);
+    target.add(memu); //creating correct list of buildings that should be returned from AE
+    target.add(endB);
+    target.add(cap);
+
+    for(int i=0; i<result.size();i++){
+    System.out.println(result.get(i).getName());
+    }
+    for(int i=0; i<target.size(); i++) {
+      if(result.get(i).compareTo(target.get(i))!=0) { //checking that lists are equal
+        System.out.println(target.get(i).getName());
+        System.out.println(result.get(i).getName());
+        Assertions.fail();
+      }
+    }
+
+    }catch(Exception e) {Assertions.fail();} //fail if any exceptions
+  }
+
   public static void main(String args[]) {
 //    System.out.println(testLoadBuildings());
 //    System.out.println(testLoadPaths());

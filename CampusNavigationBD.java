@@ -69,7 +69,8 @@ public class CampusNavigationBD implements CampusNavigationInterface<BuildingInt
     	startB = graph.getNode(startB);
     	endB = graph.getNode(endB);
     	graph.removeEdge(startB, endB);
-    	this.totalPaths--;
+    	graph.removeEdge(endB, startB);
+	this.totalPaths--;
     }
 
 	@Override

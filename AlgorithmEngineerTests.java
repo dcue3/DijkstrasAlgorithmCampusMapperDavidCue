@@ -7,10 +7,14 @@
 // Notes to Grader: N/A
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * This class contains junit tests for the AlgorithmEngineer's code, testing its functionality
@@ -29,6 +33,23 @@ class AlgorithmEngineerTests {
 	protected BuildingAE Smith = new BuildingAE("Smith Residence Hall", "Residencey");
 	protected BuildingAE UnionSouth = new BuildingAE("Union South", "Union Student Center");
 	protected BuildingAE Sewell = new BuildingAE("Sewell Social Science Building","Social Science");
+	
+	// Creating a CampusNavigationBD, campusMapperFD, MapReader and Buildings for integration of my 
+	// role code (AE) with other roles, creating MapReader and Buildings below because they are 
+	// needed for other role tests too.
+	protected CampusNavigationBD BD;
+	protected campusMapperFD<Building, Double> FD; // Created with Building and Double
+	
+	// Creating the AE and Scanner needed for BD and FD
+	protected ShortPathGraphAE<BuildingInterface, Double> testIntegration = null;
+	Scanner scan = null;
+	
+	// Creating a MapReader and Buildings of the DW to test on for code review of other role tests
+	protected MapReader mapReaderTest;
+	protected Building buildingTestNoDep;
+	protected Building buildingTestDep;
+	// Creating a Path from the DW code
+	protected Path testPath;
 	
 	@BeforeEach
 	public void createInstances() {
@@ -59,6 +80,27 @@ class AlgorithmEngineerTests {
     	test.insertEdge(Smith, Mosse, 2);
     	test.insertEdge(UnionSouth, Sewell, 4);
     	test.insertEdge(DeLuca, Chemistry, 1);
+    	
+    	
+    	// instantiating CampusNavigationBD, campusMapperFD, MapReader and Buildings for integration 
+    	// tests of my role code (AE) with other roles, creating MapReader and Buildings below 
+    	// because they are needed for other role tests too.
+    	// Instantiating the AE and Scanner needed to instantiate the FD and BD classes
+    	testIntegration = new ShortPathGraphAE<BuildingInterface, Double>();
+    	scan = new Scanner(System.in);
+	
+    	// Instantiating the MapReader and Buildings from DW for code review of other role tests
+    	mapReaderTest = new MapReader();
+	buildingTestNoDep = new Building("Computer Science");
+    	buildingTestDep = new Building("Mosse", "Hummanities");    	
+
+	// Instantiating the Backend and Frontend objects
+    	BD = new CampusNavigationBD(testIntegration, mapReaderTest);
+    	FD = new campusMapperFD<Building, Double>(scan, BD);
+    	
+    	// Instantiating the Path from the DW code
+    	testPath = new Path(4.4, "Computer Science", "Mosse");
+    	
 	}
 	
 	@Test
@@ -251,4 +293,192 @@ class AlgorithmEngineerTests {
 			fail("Wrong Exception was thrown");
 		}
 	}
+
+@Test
+	/**
+	 * Tests that AE's, BD's, and FD's code are properly integrated together. This test passes input
+	 * values to the methods of the FD that should call methods of the BD which should call methods
+	 * of the AE. When this results in an Exception, the FD should catch the Exception so this test
+	 * makes sure that when integrated, the right methods are called and the Exceptions are caught
+	 * meaning that AE, BD, and FD are working together properly
+	 */
+	void IntegrationAEWithFDAndBDTest1() {
+		// Testing that loading in a valid file does not result in an Exception
+		try {
+			FD.loadDataFD("CampusMap.gv");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			e.printStackTrace();
+			fail("Unexpected Exception was thrown");
+		}
+		// Testing that adding a building and a path does not result in an Exception
+		try {
+			FD.addBuildingFD("Test Building 1", "fake");
+			FD.addBuildingFD("Test Building 2", "fake");
+			FD.addPathFD("Test Building 1", "Test Building 2", 4.4);
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		// Testing that getting the shortest path between two and three buildings does not cause
+		// an Exception, using the get data and cost methods for all
+		try {
+			FD.getShortestPath("Memorial Union", "Witte");
+			FD.getShortestPathCost("Memorial Union", "Witte");
+			FD.getShortestPathRequired("Memorial Union", "Witte", "Sellery");
+			FD.getShortestPathRequiredCost("Memorial Union", "Witte", "Sellery");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		// Testing that removing a building and path does not result in an error
+		try {
+			FD.removePathFD("Test Building 1", "Test Building 2");
+			FD.removeBuildingFD("Test Building 1");
+			FD.removeBuildingFD("Test Building 2");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		// Testing that the getData method of the front end does not result in an error
+		try {
+			FD.getDataFD();
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		// Passing if the integration works as expected and the tests above all pass
+	}
+	
+	@Test
+	/**
+	 * This tests the integration of AE with DW and BD, it uses methods from the BD that make use
+	 * of the code written by the DW (MapReader, Building and Path class), and the BD populates a 
+	 * object of the class written by the AE. Therefore, by testing the proper functionality of 
+	 * the BD using the classes implemented by the AE and DW, this test tests that AE, DW, and BD
+	 * work together, thus testing their integration.
+	 */
+	void IntegrationAEWithDWAndBDTest2() {
+		// Testing loading in a file using the backend's method, which uses the MapReader
+		// and should insert buildings and paths into the AE's graph
+		try {
+			BD.loadMap("CampusMap.gv");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			e.printStackTrace();
+			fail("Unexpected Exception was thrown1");
+		}
+		// Checking that the CampusMap.gv file was loaded in by using the getData method of
+		// the backend, this will check functionality of the getData method and the loadFile
+		// method of the BD, while checking that the MapReader of the DW works, and checking that
+		// the AE's insertNode and edge methods work
+		try {
+			assertEquals(BD.getData(), "Total Buildings in this campus map: 11\n"
+					+ "Total Paths in this campus map: 13");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown2");
+		}
+		
+		// Testing that a Building and path can be inserted into the AE code from the BD methods
+		try {
+			BD.addBuilding("Test Name 1", "Fake Department");
+			BD.addBuilding("Test Name 2", "Fake Department 2");
+			BD.addPath("Test Name 1", "Test Name 2", 4.4);
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown3");
+		}
+		// Testing that a existing path can be found between buildings using BD's methods on AE
+		try {
+			BD.getShortestPath("Test Name 1", "Test Name 2");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown4");
+		}
+		// Testing that a Building and path can be removed from the AE graph from the BD methods
+		try {
+			BD.removePath("Test Name 1", "Test Name 2");
+			BD.removeBuilding("Test Name 1");
+			BD.removeBuilding("Test Name 2");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown5");
+		}
+		// Pass if the tests ensure that the integration works as expected		
+	}
+	
+	@Test
+	/**
+	 * This is a code review of DataWrangler test checks the proper functionality of the MapReader
+	 * class written by the DataWrangler. It makes sure that a valid file is read in while an
+	 * invalid file results in the read method throwing an error. It also makes sure a valid call
+	 * returns lists for the methods for getting the buildings and paths in the file.
+	 */
+	void CodeReviewOfDataWranglerMapReaderTest1() {
+		// Testing that the reading of Buildings and Paths from a file works as expected
+		List<Building> buildingsList = null;
+		List<PathInterface> pathsList = null;
+		// This is a file name that is valid so it should not throw an Exception
+		try {
+			buildingsList = mapReaderTest.readBuildingsFromFile("CampusMap.gv");
+		} catch (FileNotFoundException e) {
+			// Fail if an Unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		try {
+			pathsList = mapReaderTest.readPathsFromFile("CampusMap.gv");
+		} catch (FileNotFoundException e) {
+			// Fail if an Unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		// This is an invalid file name so it should throw an Exception
+		try {
+			buildingsList = mapReaderTest.readBuildingsFromFile("FAKENAME.gv");
+			// Fail if an Exception is not thrown
+			fail("Expected Exception was not thrown");
+		} catch (FileNotFoundException e) {
+			
+		}
+		try {
+			pathsList = mapReaderTest.readPathsFromFile("FAKENAME.gv");
+			// Fail if an Exception is not thrown
+						fail("Expected Exception was not thrown");
+		} catch (FileNotFoundException e) {
+			
+		}
+		// Passing if the class works as expected and no unexpected Exceptions are thrown
+	}
+	
+	@Test
+	/**
+	 * This is a code review of the DataWrangler's code test that tests the proper functionality of 
+	 * the methods in the Building and Path class from the DataWrangler. Each class has methods to 
+	 * get aspects of the object, and the tests make sure the methods of the classes return the 
+	 * right values when called.
+	 */
+	void CodeReviewOfDataWranglerBuildingPathTest2() {
+		// Checking that the Building class's methods work as expected
+		try {
+			assertEquals(buildingTestNoDep.getDepartment(), "N/A");
+			assertEquals(buildingTestNoDep.getName(), "Computer Science");
+			assertEquals(buildingTestDep.getDepartment(), "Hummanities");
+			assertEquals(buildingTestDep.getName(), "Mosse");
+		} catch (Exception e) {
+			// Failing if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+
+		// Checking that the Path class's methods work as expected
+		try {
+			assertEquals(testPath.getDistance(), 4.4);
+			assertEquals(testPath.getPredecessor(), "Computer Science");
+			assertEquals(testPath.getSuccessor(), "Mosse");
+		} catch (Exception e) {
+			// Fail if an unexpected Exception is thrown
+			fail("Unexpected Exception was thrown");
+		}
+		// Pass if the Building and Path class of the DW work as expected and pass all tests above
+	}
+
 }
